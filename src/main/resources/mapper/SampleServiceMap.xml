@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test.mapper.SampleServiceMap">
+
+    <insert id="test">
+        INSERT into aa(name) VALUES('测试')
+    </insert>
+    <select id="logout" parameterType="com.example.test.dto.User" resultType="com.example.test.dto.User">
+        SELECT id from user where accout=#{account,jdbcType=VARCHAR} AND pass_word=#{passWord,jdbcType=VARCHAR}
+    </select>
+</mapper>
