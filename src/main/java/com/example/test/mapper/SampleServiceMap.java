@@ -11,5 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface SampleServiceMap {
     void test();
 
-    User logout(User user);
+    User login(User user);
+
+    int register(User user);
+
+    User getUserByName(User user);
+
+    int updateUser(User userByName);
 }

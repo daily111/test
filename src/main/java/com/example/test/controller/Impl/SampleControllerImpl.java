@@ -3,12 +3,23 @@ package com.example.test.controller.Impl;
 import com.example.test.controller.SampleController;
 import com.example.test.dto.User;
 import com.example.test.service.SampleService;
+import com.example.test.tool.Constant;
+import com.example.test.tool.Parameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.github.qcloudsms.SmsSingleSender;
+import com.github.qcloudsms.SmsSingleSenderResult;
+import com.github.qcloudsms.httpclient.HTTPException;
+import org.json.JSONException;
+import java.io.IOException;
 
 import javax.annotation.Resource;
+
+import static com.example.test.tool.Constant.appid;
+import static com.example.test.tool.Constant.appkey;
+import static com.example.test.tool.Constant.phoneNumbers;
 
 @RestController
 public class SampleControllerImpl implements SampleController {
@@ -23,9 +34,52 @@ public class SampleControllerImpl implements SampleController {
     }
 
     @Override
-    public boolean logout(@RequestBody User user) {
-        boolean n=sampleService.logout(user);
-
-        return n;
+    public Parameters<User> login(@RequestBody User user) {
+        Parameters<User> response;
+        boolean b=sampleService.login(user);
+        if (b){
+            response=Parameters.ok();
+            return response;
+        }
+        response=Parameters.fail();
+        response.setMsg(Constant.LOGIN_ERROR);
+        return response;
     }
+
+    @Override
+    public Parameters<User> register(@RequestBody User user) {
+        Parameters<User> response;
+
+        User userByName = sampleService.getUserByName(user);
+        if (userByName!=null){
+            response=Parameters.fail();
+            response.setMsg(Constant.USER_ALREADY_EXISTS);
+            return response;
+        }
+        boolean b = sampleService.register(user);
+        if (b){
+            response= Parameters.ok();
+        }else {
+            response=Parameters.fail();
+        }
+        return response;
+    }
+
+    @Override
+    public Parameters<User> verification(@RequestBody User user) {
+        Parameters<User> response;
+        if (user.getVerificationCode()!=null && user.getAccount()!=null){
+            User userByName = sampleService.getUserByName(user);
+            if (userByName!=null){
+                userByName.setUserStatus(Constant.USER_STATUS_NORMAL);
+              sampleService.updateUser(userByName);
+                response= Parameters.ok();
+                return response;
+            }
+        }
+        response=Parameters.fail();
+        response.setMsg(Constant.VERICATION_CODE_ERROR);
+        return response;
+    }
+
 }

@@ -47,6 +47,11 @@
                 <artifactId>spring-boot-devtools</artifactId>
                 <optional>true</optional>
             </dependency>
+        <dependency>
+            <groupId>com.github.qcloudsms</groupId>
+            <artifactId>qcloudsms</artifactId>
+            <version>1.0.6</version>
+        </dependency>
     </dependencies>
 
     <build>
