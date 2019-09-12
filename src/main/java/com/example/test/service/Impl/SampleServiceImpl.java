@@ -1,9 +1,14 @@
 package com.example.test.service.Impl;
 
+import com.example.test.dto.QueryUser;
 import com.example.test.dto.User;
 import com.example.test.mapper.SampleServiceMap;
 import com.example.test.service.SampleService;
 import com.example.test.tool.Constant;
+import com.example.test.tool.PageDto;
+import com.example.test.tool.QueryDto;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.github.qcloudsms.httpclient.HTTPException;
@@ -11,6 +16,7 @@ import org.json.JSONException;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
 
 import static com.example.test.tool.Constant.appid;
 import static com.example.test.tool.Constant.appkey;
@@ -29,13 +35,11 @@ public class SampleServiceImpl implements SampleService {
     }
 
     @Override
-    public boolean login(User user) {
+    public User login(User user) {
 
         User resultUser=sampleServiceMap.login(user);
-        if (resultUser!=null){
-            return true;
-        }
-        return false;
+
+        return resultUser;
     }
 
     @Override
@@ -80,5 +84,18 @@ public class SampleServiceImpl implements SampleService {
         int n=sampleServiceMap.updateUser(userByName);
 
         return false;
+    }
+
+    @Override
+    public PageDto<User> list(QueryUser query) {
+        PageDto<User> result = new PageDto<>();
+        PageHelper.startPage(query.getPageNo(), query.getPageSize());
+
+        List<User> userList=sampleServiceMap.list(query);
+        PageInfo<User> p = new PageInfo<>(userList);
+
+        result.setTotal(p.getTotal());
+        result.setItems(userList);
+        return result;
     }
 }

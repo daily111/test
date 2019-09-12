@@ -1,7 +1,9 @@
 package com.example.test.controller;
 
 
+import com.example.test.dto.QueryUser;
 import com.example.test.dto.User;
+import com.example.test.tool.PageDto;
 import com.example.test.tool.Parameters;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,4 +38,8 @@ public interface SampleController {
      */
     @PostMapping("/verification")
     public Parameters<User> verification(User user);
+
+    @PostMapping("/list")
+    public Parameters<PageDto<User>> list(QueryUser query);
+
 }

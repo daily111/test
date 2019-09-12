@@ -3,6 +3,7 @@ package com.example.test.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class User implements Serializable {
@@ -12,6 +13,34 @@ public class User implements Serializable {
     private String phone;//手机号
     private String verificationCode;//验证码
     private Integer userStatus;//用户状态
+    private Date inputTime;//注册时间
+    private Date loginTime;//最新登陆时间
+    private Integer loginCount;//登陆次数
+
+
+    public Date getInputTime() {
+        return inputTime;
+    }
+
+    public void setInputTime(Date inputTime) {
+        this.inputTime = inputTime;
+    }
+
+    public Date getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
+    }
+
+    public Integer getLoginCount() {
+        return loginCount;
+    }
+
+    public void setLoginCount(Integer loginCount) {
+        this.loginCount = loginCount;
+    }
 
     public Integer getUserStatus() {
         return userStatus;

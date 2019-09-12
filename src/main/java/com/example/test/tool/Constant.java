@@ -21,4 +21,10 @@ package com.example.test.tool;
     public static final int USER_STATUS_NORMAL=1;
 
     public static final String LOGIN_ERROR="账号或密码错误";
+
+    public static final String PHONE_NULL="手机号不能不为空";
+
+    public static final int PAGE_NO=1;
+
+    public static final int PAGE_SIZE=15;
  }
