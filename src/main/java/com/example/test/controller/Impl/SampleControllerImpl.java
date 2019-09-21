@@ -85,7 +85,9 @@ public class SampleControllerImpl implements SampleController {
             User userByName = sampleService.getUserByName(user);
             if (userByName!=null){
                 userByName.setUserStatus(Constant.USER_STATUS_NORMAL);
-              sampleService.updateUser(userByName);
+                Calendar ca = Calendar.getInstance();
+                userByName.setInputTime(ca.getTime());
+                sampleService.updateUser(userByName);
                 response= Parameters.ok();
                 return response;
             }

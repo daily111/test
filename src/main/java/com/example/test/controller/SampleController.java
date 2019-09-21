@@ -5,6 +5,7 @@ import com.example.test.dto.QueryUser;
 import com.example.test.dto.User;
 import com.example.test.tool.PageDto;
 import com.example.test.tool.Parameters;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/home")
 public interface SampleController {
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/test")
     public String test();
 
@@ -20,6 +22,7 @@ public interface SampleController {
      * @param user
      * @return
      */
+    @CrossOrigin(origins = "*")
     @PostMapping("/login")
     public Parameters<User> login(User user);
 
@@ -28,6 +31,7 @@ public interface SampleController {
      * @param user
      * @return
      */
+    @CrossOrigin(origins = "*")
     @PostMapping("/register")
     public Parameters<User> register(User user);
 
@@ -36,10 +40,12 @@ public interface SampleController {
      * @param user
      * @return
      */
+    @CrossOrigin(origins = "*")
     @PostMapping("/verification")
     public Parameters<User> verification(User user);
 
-    @PostMapping("/list")
+    @CrossOrigin(origins = "*")
+    @PostMapping ("/list")
     public Parameters<PageDto<User>> list(QueryUser query);
 
 }

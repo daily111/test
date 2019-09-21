@@ -4,7 +4,7 @@
 <mapper namespace="com.example.test.mapper.SampleServiceMap">
 
     <insert id="test">
-        INSERT into aa(name) VALUES('测试')
+        INSERT into aa(name,time) VALUES('测试',NOW())
     </insert>
 
     <select id="login" parameterType="com.example.test.dto.User" resultType="com.example.test.dto.User">
@@ -44,7 +44,10 @@
                 login_count=#{loginCount,jdbcType=INTEGER},
             </if>
             <if test="loginTime != null">
-                login_time=#{loginTime,jdbcType=TIMESTAMP}
+                login_time=#{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="inputTime != null">
+                input_time=#{inputTime,jdbcType=TIMESTAMP}
             </if>
         </set>
         where id =#{id}
