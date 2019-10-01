@@ -1,5 +1,6 @@
 package com.example.test.service.Impl;
 
+import com.example.test.dto.MessageBoard;
 import com.example.test.dto.QueryUser;
 import com.example.test.dto.User;
 import com.example.test.mapper.SampleServiceMap;
@@ -16,6 +17,7 @@ import org.json.JSONException;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 
 import static com.example.test.tool.Constant.appid;
@@ -97,5 +99,15 @@ public class SampleServiceImpl implements SampleService {
         result.setTotal(p.getTotal());
         result.setItems(userList);
         return result;
+    }
+
+    @Override
+    public int saveMessageBoard(MessageBoard messageBoard) {
+        Calendar ca = Calendar.getInstance();
+        messageBoard.setInputTime(ca.getTime());
+        int n=sampleServiceMap.saveMessageBoard(messageBoard);
+
+
+        return n;
     }
 }

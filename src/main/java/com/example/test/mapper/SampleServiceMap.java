@@ -1,5 +1,6 @@
 package com.example.test.mapper;
 
+import com.example.test.dto.MessageBoard;
 import com.example.test.dto.QueryUser;
 import com.example.test.dto.User;
 import com.example.test.tool.QueryDto;
@@ -24,4 +25,6 @@ public interface SampleServiceMap {
     int updateUser(User userByName);
 
     List<User> list(QueryUser query);
- }
+
+    int saveMessageBoard(MessageBoard messageBoard);
+}

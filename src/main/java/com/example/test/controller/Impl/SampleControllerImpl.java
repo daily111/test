@@ -1,6 +1,7 @@
 package com.example.test.controller.Impl;
 
 import com.example.test.controller.SampleController;
+import com.example.test.dto.MessageBoard;
 import com.example.test.dto.QueryUser;
 import com.example.test.dto.User;
 import com.example.test.service.SampleService;
@@ -105,6 +106,20 @@ public class SampleControllerImpl implements SampleController {
         PageDto<User> data=sampleService.list(query);
 
         response.setData(data);
+        return response;
+    }
+
+    @Override
+    public Parameters<MessageBoard> saveMessageBoard(@RequestBody MessageBoard messageBoard) {
+        Parameters<MessageBoard> response = new Parameters<>();
+
+        int n=sampleService.saveMessageBoard(messageBoard);
+
+        if (n>0){
+            response= Parameters.ok();
+            return response;
+        }
+        response=Parameters.fail();
         return response;
     }
 

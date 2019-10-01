@@ -1,14 +1,12 @@
 package com.example.test.controller;
 
 
+import com.example.test.dto.MessageBoard;
 import com.example.test.dto.QueryUser;
 import com.example.test.dto.User;
 import com.example.test.tool.PageDto;
 import com.example.test.tool.Parameters;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/home")
 public interface SampleController {
@@ -48,4 +46,7 @@ public interface SampleController {
     @PostMapping ("/list")
     public Parameters<PageDto<User>> list(QueryUser query);
 
+    @CrossOrigin(origins = "*")
+    @PostMapping("/saveMessageBoard")
+    public Parameters<MessageBoard> saveMessageBoard(@RequestBody MessageBoard messageBoard);
 }

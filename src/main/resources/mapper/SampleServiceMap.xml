@@ -58,4 +58,11 @@
          input_time as inputTime,login_time as loginTime,login_count as loginCount
          from user
     </select>
+
+    <insert id="saveMessageBoard" parameterType="com.example.test.dto.MessageBoard">
+        insert into message_board(account,message,inputTime)
+        values (#{account,jdbcType=VARCHAR},#{message,jdbcType=VARCHAR},#{inputTime,jdbcType=VARCHAR})
+
+    </insert>
+
 </mapper>
