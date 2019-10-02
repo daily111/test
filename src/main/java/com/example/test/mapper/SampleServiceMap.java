@@ -27,4 +27,7 @@ public interface SampleServiceMap {
     List<User> list(QueryUser query);
 
     int saveMessageBoard(MessageBoard messageBoard);
+
+    List<MessageBoard> messageBoardList();
+
 }

@@ -2,6 +2,7 @@ package com.example.test.controller.Impl;
 
 import com.example.test.controller.SampleController;
 import com.example.test.dto.MessageBoard;
+import com.example.test.dto.QueryMessageBoard;
 import com.example.test.dto.QueryUser;
 import com.example.test.dto.User;
 import com.example.test.service.SampleService;
@@ -120,6 +121,16 @@ public class SampleControllerImpl implements SampleController {
             return response;
         }
         response=Parameters.fail();
+        return response;
+    }
+
+    @Override
+    public Parameters<PageDto<MessageBoard>> messageBoardList(QueryMessageBoard query) {
+        Parameters<PageDto<MessageBoard>> response = new Parameters<>();
+
+        PageDto<MessageBoard> data=sampleService.messageBoardList(query);
+
+        response.setData(data);
         return response;
     }
 

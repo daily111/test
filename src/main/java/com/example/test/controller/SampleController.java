@@ -2,6 +2,7 @@ package com.example.test.controller;
 
 
 import com.example.test.dto.MessageBoard;
+import com.example.test.dto.QueryMessageBoard;
 import com.example.test.dto.QueryUser;
 import com.example.test.dto.User;
 import com.example.test.tool.PageDto;
@@ -49,4 +50,8 @@ public interface SampleController {
     @CrossOrigin(origins = "*")
     @PostMapping("/saveMessageBoard")
     public Parameters<MessageBoard> saveMessageBoard(@RequestBody MessageBoard messageBoard);
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/messageBoardList")
+    public Parameters<PageDto<MessageBoard>> messageBoardList(@RequestBody QueryMessageBoard query);
 }
