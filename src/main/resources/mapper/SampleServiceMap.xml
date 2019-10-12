@@ -66,7 +66,7 @@
 
     <select id="messageBoardList" parameterType="com.example.test.dto.QueryMessageBoard" resultType="com.example.test.dto.MessageBoard">
         select id as id, account as account, message as message,inputTime as inputTime
-        from message_board
+        from message_board order by  inputTime  desc
     </select>
 
 </mapper>

@@ -6,10 +6,10 @@ import com.example.test.dto.QueryMessageBoard;
 import com.example.test.dto.QueryUser;
 import com.example.test.dto.User;
 import com.example.test.service.SampleService;
-import com.example.test.tool.Constant;
-import com.example.test.tool.PageDto;
-import com.example.test.tool.Parameters;
-import com.example.test.tool.QueryDto;
+import com.example.test.tool.*;
+import com.google.code.kaptcha.Constants;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +34,11 @@ public class SampleControllerImpl implements SampleController {
 
 
     @Override
+    public String login() {
+        return "redirect:login.html";
+    }
+
+    @Override
     public String test() {
         sampleService.test();
         return "hey";
@@ -41,7 +46,36 @@ public class SampleControllerImpl implements SampleController {
 
     @Override
     public Parameters<User> login(@RequestBody User user) {
+        String username =user.getAccount();
+        String password =user.getPassWord();
         Parameters<User> response;
+        String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+        if (!user.getVerificationCode().equalsIgnoreCase(kaptcha)) {
+            response=Parameters.fail();
+            response.setMsg(Constant.VERICATION_CODE_ERROR);
+            return response;
+        }
+
+       /* try {
+            Subject subject = ShiroUtils.getSubject();
+            //sha256加密
+            password = MD5Utils.encrypt(username, password);
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            subject.login(token);
+        } catch (IncorrectCredentialsException e) {
+            response=Parameters.fail();
+            response.setMsg(e.getMessage());
+            return response;
+        } catch (LockedAccountException e) {
+            response=Parameters.fail();
+            response.setMsg(e.getMessage());
+            return response;
+        } catch (AuthenticationException e) {
+            response=Parameters.fail();
+            response.setMsg("账户验证失败");
+            return response;
+        }*/
+
         User b=sampleService.login(user);
         if (b!=null){
             response=Parameters.ok();

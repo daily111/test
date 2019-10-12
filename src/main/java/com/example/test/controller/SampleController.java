@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/home")
 public interface SampleController {
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String login();
+
     @CrossOrigin(origins = "*")
     @GetMapping("/test")
     public String test();

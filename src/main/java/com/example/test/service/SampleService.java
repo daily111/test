@@ -7,6 +7,8 @@ import com.example.test.dto.User;
 import com.example.test.tool.PageDto;
 import com.example.test.tool.QueryDto;
 
+import java.util.Set;
+
 public interface SampleService {
     void test();
 
@@ -23,4 +25,8 @@ public interface SampleService {
     int saveMessageBoard(MessageBoard messageBoard);
 
     PageDto<MessageBoard> messageBoardList(QueryMessageBoard query);
+
+    Set<String> listUserRoles(Integer userId);
+
+    Set<String> listUserPerms(int userId);
 }

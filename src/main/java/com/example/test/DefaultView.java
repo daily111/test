@@ -11,7 +11,7 @@ public class DefaultView extends WebMvcConfigurerAdapter {
     public void addViewControllers(ViewControllerRegistry registry) {
         super.addViewControllers(registry);
         //主页
-        registry.addViewController("/").setViewName("forward:/home/test");
+        registry.addViewController("/").setViewName("redirect:login.html");
     }
 
 }

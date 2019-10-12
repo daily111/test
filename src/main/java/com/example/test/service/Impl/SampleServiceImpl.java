@@ -19,8 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 import static com.example.test.tool.Constant.appid;
 import static com.example.test.tool.Constant.appkey;
@@ -126,5 +125,22 @@ public class SampleServiceImpl implements SampleService {
 
 
         return result;
+    }
+
+    @Override
+    public Set<String> listUserRoles(Integer userId) {
+        //List<String> roles = sampleServiceMap.listUserRoles(userId);
+        Set<String> rolesSet = new HashSet<>();
+        /*for(String role : roles) {
+            if(StringUtils.isNotBlank(role)) {
+                rolesSet.addAll(Arrays.asList(role.trim().split(",")));
+            }
+        }*/
+        return rolesSet;
+    }
+
+    @Override
+    public Set<String> listUserPerms(int userId) {
+        return null;
     }
 }

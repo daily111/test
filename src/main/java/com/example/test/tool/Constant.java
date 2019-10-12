@@ -27,4 +27,6 @@ package com.example.test.tool;
     public static final int PAGE_NO=1;
 
     public static final int PAGE_SIZE=15;
+
+    public final static String KAPTCHA_SESSION_KEY = "KAPTCHA_SESSION_KEY";//验证码key
  }
