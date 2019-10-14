@@ -49,7 +49,11 @@ public class SampleControllerImpl implements SampleController {
         String username =user.getAccount();
         String password =user.getPassWord();
         Parameters<User> response;
-        String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+        String kaptcha=null;
+        if (user.getVerificationCode()!=null && !user.getVerificationCode().isEmpty()){
+         kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+        }
+
         if (!user.getVerificationCode().equalsIgnoreCase(kaptcha)) {
             response=Parameters.fail();
             response.setMsg(Constant.VERICATION_CODE_ERROR);
