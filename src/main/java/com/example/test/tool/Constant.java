@@ -24,6 +24,8 @@ package com.example.test.tool;
 
     public static final String PHONE_NULL="手机号不能不为空";
 
+    public static final String ACCOUNT_OR_PASSWORD_NULL="账号或密码不能为空";
+
     public static final int PAGE_NO=1;
 
     public static final int PAGE_SIZE=15;

@@ -85,6 +85,9 @@ public class SampleControllerImpl implements SampleController {
             response=Parameters.ok();
             Calendar ca = Calendar.getInstance();
             b.setLoginTime(ca.getTime());
+            if (b.getLoginCount()==null){
+                b.setLoginCount(0);
+            }
             b.setLoginCount(b.getLoginCount()+1);
             sampleService.updateUser(b);
             return response;
@@ -97,7 +100,12 @@ public class SampleControllerImpl implements SampleController {
     @Override
     public Parameters<User> register(@RequestBody User user) {
         Parameters<User> response;
-        if (user.getPhone()==null){
+        if (user.getAccount()==null||user.getAccount().isEmpty()||user.getPassWord()==null||user.getPassWord().isEmpty()){
+            response=Parameters.fail();
+            response.setMsg(Constant.ACCOUNT_OR_PASSWORD_NULL);
+            return response;
+        }
+        if (user.getPhone()==null||user.getPhone().isEmpty()){
             response=Parameters.fail();
             response.setMsg(Constant.PHONE_NULL);
             return response;
