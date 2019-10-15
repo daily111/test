@@ -104,7 +104,7 @@
 
                 </div>
                 <div class="login-center clearfix">
-                    <div class="login-center-img"><img src="img/password.png"/></div>
+                    <div class="login-center-img"><img style="opacity: 0.6;" src="img/20191015155558.jpg"/></div>
                     <div class="login-center-input">
                         <input type="text" name=""value="" v-model="phone" placeholder="请输入您的手机号" onfocus="this.placeholder=''" onblur="this.placeholder='请输入您的手机号'"/>
                         <div class="login-center-input-text">手机号</div>
@@ -197,8 +197,6 @@
         register(){
             var that = this;
             var num = 60;
-            //禁用按钮
-            that.btnDisable = true;
             this.$http.post('home/register',{
                 account:this.username,
                 passWord:this.password,
@@ -206,6 +204,8 @@
                 verificationCode:this.verificationCode,
             },{}).then(function (result) {
                 if (result.body.code==0000){
+                    //禁用按钮
+                    that.btnDisable = true;
                     //定时器
                     var time = setInterval(function(){
                         num--
