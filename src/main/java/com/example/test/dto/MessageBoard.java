@@ -10,6 +10,15 @@ public class MessageBoard {
     public String account;//账户名
     public String message;//留言消息
     public Date inputTime;//留言时间
+    public String onAccount;//当前人
+
+    public String getOnAccount() {
+        return onAccount;
+    }
+
+    public void setOnAccount(String onAccount) {
+        this.onAccount = onAccount;
+    }
 
     public Integer getId() {
         return id;

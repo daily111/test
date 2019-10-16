@@ -29,4 +29,6 @@ public interface SampleService {
     Set<String> listUserRoles(Integer userId);
 
     Set<String> listUserPerms(int userId);
+
+    User getByUserName(User user);
 }

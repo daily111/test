@@ -143,4 +143,11 @@ public class SampleServiceImpl implements SampleService {
     public Set<String> listUserPerms(int userId) {
         return null;
     }
+
+    @Override
+    public User getByUserName(User user) {
+        User resultUser = sampleServiceMap.getByUserName(user);
+
+        return resultUser;
+    }
 }

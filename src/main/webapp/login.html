@@ -72,7 +72,7 @@
                     <img alt="如果看不清楚，请单击图片刷新！" class="pointer" :src="src" @click="refreshCode">
                     <a href="javascript:;" @click="refreshCode">点击刷新</a>
                 </div>
-                <div class="login-button" style="margin-bottom: 20px;margin-top: 35px" @click="login">
+                <div class="login-button" style="margin-bottom: 20px;margin-top: 35px" @click="login" @keyup.enter="login">
                     登录
                 </div>
                 <div style="margin-top: 20px;text-align:center">
@@ -118,9 +118,12 @@
                         <div class="login-center-input-text">验证码</div>
                     </div>
                     <!--<a href="javascript:;" @click="register">获取验证码</a>-->
-                    <button style="width: 65px" id="send-btn" class="btn" @click="register" ref="sendRegister" :disabled="btnDisable">{{btnCn}}</button>
+                    <button style="width: 65px" id="send-btn" class="button-wrap" @click="register" ref="sendRegister" :disabled="btnDisable">{{btnCn}}</button>
+                  <!--  <div class="showcase-examples l-over l-center">
+                    <a class="button button-glow button-border button-rounded button-primary">teswt</a>
+                    </div>-->
                 </div>
-                <div class="login-button" style="margin-bottom: 20px"  @click="verification">
+                <div class="login-button" style="margin-bottom: 20px"  @click="verification" @keyup.enter="verification">
                     注册
                 </div>
                 <div style="margin-top: 20px;text-align:center" >

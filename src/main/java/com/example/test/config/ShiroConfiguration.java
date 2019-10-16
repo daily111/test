@@ -32,20 +32,19 @@ public class ShiroConfiguration {
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         //按顺序依次判断
         filterChainDefinitionMap.put("/static/**", "anon");
-        filterChainDefinitionMap.put("/user/**", "anon");
         filterChainDefinitionMap.put("/home/**", "anon");
-        filterChainDefinitionMap.put("/**", "anon");//先设置未什么都可以访问
-        //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
-        filterChainDefinitionMap.put("/logout", "logout");
-
-
+        filterChainDefinitionMap.put("/user/**", "anon");
+        filterChainDefinitionMap.put("/**/**.js", "anon");
+        filterChainDefinitionMap.put("/**/**.css", "anon");
+        filterChainDefinitionMap.put("/**/**.jpg", "anon");
+        filterChainDefinitionMap.put("/**/**.png", "anon");
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         /************************************初始化所有的权限信息开始******************************************/
         //这里，如果以后再项目中使用的话，直接从数据库中查询
-        filterChainDefinitionMap.put("/user/list", "authc,perms[user:list]");
+        //filterChainDefinitionMap.put("/user/list", "authc,perms[user:list]");
         //filterChainDefinitionMap.put("/user/add", "authc,perms[user:add]");
         /***************************************初始化所有的权限信息开始结束*********************************************/
-        filterChainDefinitionMap.put("**", "authc");
+        filterChainDefinitionMap.put("/**", "authc");
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
         shiroFilterFactoryBean.setLoginUrl("/login.html");
         // 登录成功后要跳转的链接

@@ -33,4 +33,7 @@ public class ShiroUtils {
     public static User getUserEntity() {
         return (User)SecurityUtils.getSubject().getPrincipal();
     }
+    public static void logout() {
+        SecurityUtils.getSubject().logout();
+    }
 }

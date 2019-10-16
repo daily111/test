@@ -30,4 +30,5 @@ public interface SampleServiceMap {
 
     List<MessageBoard> messageBoardList();
 
+    User getByUserName(User user);
 }

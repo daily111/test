@@ -9,6 +9,7 @@ import com.example.test.service.SampleService;
 import com.example.test.tool.*;
 import com.google.code.kaptcha.Constants;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,9 @@ import com.github.qcloudsms.SmsSingleSenderResult;
 import com.github.qcloudsms.httpclient.HTTPException;
 import org.json.JSONException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Collection;
 
 import javax.annotation.Resource;
 
@@ -51,7 +54,13 @@ public class SampleControllerImpl implements SampleController {
         Parameters<User> response;
         String kaptcha=null;
         if (user.getVerificationCode()!=null && !user.getVerificationCode().isEmpty()){
-         kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+         try {
+             kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+         }catch (Exception e){
+             response=Parameters.fail();
+             response.setMsg("验证码已过期,请刷新验证码");
+             return response;
+         }
         }
 
         if (!user.getVerificationCode().equalsIgnoreCase(kaptcha)) {
@@ -60,10 +69,10 @@ public class SampleControllerImpl implements SampleController {
             return response;
         }
 
-       /* try {
+        try {
             Subject subject = ShiroUtils.getSubject();
             //sha256加密
-            password = MD5Utils.encrypt(username, password);
+            //password = MD5Utils.encrypt(username, password);
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             subject.login(token);
         } catch (IncorrectCredentialsException e) {
@@ -78,7 +87,7 @@ public class SampleControllerImpl implements SampleController {
             response=Parameters.fail();
             response.setMsg("账户验证失败");
             return response;
-        }*/
+        }
 
         User b=sampleService.login(user);
         if (b!=null){
@@ -173,9 +182,10 @@ public class SampleControllerImpl implements SampleController {
     @Override
     public Parameters<PageDto<MessageBoard>> messageBoardList(QueryMessageBoard query) {
         Parameters<PageDto<MessageBoard>> response = new Parameters<>();
-
+        User user = ShiroUtils.getUserEntity();
         PageDto<MessageBoard> data=sampleService.messageBoardList(query);
 
+        response.setMsg(user.getAccount());
         response.setData(data);
         return response;
     }
