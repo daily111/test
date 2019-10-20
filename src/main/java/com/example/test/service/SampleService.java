@@ -5,7 +5,9 @@ import com.example.test.dto.QueryMessageBoard;
 import com.example.test.dto.QueryUser;
 import com.example.test.dto.User;
 import com.example.test.tool.PageDto;
+import com.example.test.tool.Parameters;
 import com.example.test.tool.QueryDto;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 
@@ -31,4 +33,6 @@ public interface SampleService {
     Set<String> listUserPerms(Integer roleId);
 
     User getByUserName(User user);
+
+    Parameters<User> setUserProfile(MultipartFile profile);
 }

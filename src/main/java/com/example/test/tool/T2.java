@@ -14,6 +14,11 @@ public class T2 {
     UserRedisTemplate userRedisTemplate;
 
     public static void main(String[] args) {
+
+        String a="C:/super_meeting/profiles/1571577605494IMG_3964.JPG";
+        int i = a.indexOf("s/");
+        String substring = a.substring(i+2);
+        System.out.println(substring);
 /*
         User user = new User();
         user.setAccount("test10.17");

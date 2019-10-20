@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>主页</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -27,6 +27,13 @@
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <!--vue-->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!--vue中http请求需要包-->
+  <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script>
+  <!--<script src="statics/myCss.css"></script>-->
+  <!--vue路由-->
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,7 +46,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+<div class="wrapper" id="app">
 
   <header class="main-header">
     <!-- Logo -->
@@ -47,7 +54,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>首页</b>LTE</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -72,7 +79,7 @@
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img :src="profilePath" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Support Team
@@ -258,17 +265,15 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <img :src="profilePath" class="user-image" alt="User Image">
+              <span class="hidden-xs">{{userName}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+                <img :src="profilePath"  data-toggle="modal" data-target="#ResetModal" class="img-circle" alt="User Image">
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  {{userName}}
                 </p>
               </li>
               <!-- Menu Body -->
@@ -292,7 +297,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="user/logout" class="btn btn-default btn-flat">登出</a>
                 </div>
               </li>
             </ul>
@@ -312,10 +317,10 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img :src="profilePath" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>{{userName}}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -654,9 +659,9 @@
                 <img src="dist/img/user3-128x128.jpg" alt="user image" class="offline">
 
                 <p class="message">
-                  <a href="#" class="name">
+                  <a href="#" class="name"><b>Admin</b>
                     <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
-                    Alexander Pierce
+                    {{userName}}
                   </a>
                   I would like to meet you to discuss the latest news about
                   the arrival of the new theme. They say it is going to be one the
@@ -666,7 +671,7 @@
               <!-- /.item -->
               <!-- chat item -->
               <div class="item">
-                <img src="dist/img/user2-160x160.jpg" alt="user image" class="offline">
+                <img :src="profilePath" alt="user image" class="offline">
 
                 <p class="message">
                   <a href="#" class="name">
@@ -1026,14 +1031,6 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.18
-    </div>
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
-    reserved.
-  </footer>
-
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark" style="display: none;">
     <!-- Create the tabs -->
@@ -1227,9 +1224,41 @@
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
+  <div class="modal fade" id="ResetModal" role="dialog" style=" position: fixed;
+      left: 50%;
+      top: 50%;
+      width: 300px;
+      height: 200px;
+      margin: -100px 0px 0px -150px;zindex:9999999999;">
+    <form action="home/profiles" method="post" enctype="multipart/form-data">
+      <input type="file" name="profile" value="更换用户头像"/>
+      <input id="submit_form" type="submit" class="btn btn-success save" value="保存"/>
+    </form>
+  </div>
 </div>
 <!-- ./wrapper -->
+<script>
+  var vue = new Vue({
+      el:'#app',
+      data:{
+          userName:null,
+          profilePath:null,
+      },
+      created(){
+        this.getUser();
+      },
+      methods:{
+          getUser(){
+              this.$http.get('home/getUser',{},{}).then(function (result) {
+                  this.userName=result.body.data.account;
+                  this.profilePath="image/"+result.body.data.profilePath;
 
+              })
+          }
+      },
+
+  });
+</script>
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

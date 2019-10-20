@@ -6,18 +6,21 @@ import com.example.test.dto.QueryUser;
 import com.example.test.dto.User;
 import com.example.test.mapper.SampleServiceMap;
 import com.example.test.service.SampleService;
-import com.example.test.tool.Constant;
-import com.example.test.tool.PageDto;
-import com.example.test.tool.QueryDto;
+import com.example.test.tool.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.github.qcloudsms.httpclient.HTTPException;
 import org.json.JSONException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -152,5 +155,62 @@ public class SampleServiceImpl implements SampleService {
         User resultUser = sampleServiceMap.getByUserName(user);
 
         return resultUser;
+    }
+
+    @Override
+    public Parameters<User> setUserProfile(MultipartFile newProfile) {
+            // 根据Windows和Linux配置不同的头像保存路径
+            String OSName = System.getProperty("os.name");
+            String profilesPath = OSName.toLowerCase().startsWith("win") ? Constant.WINDOWS_PROFILES_PATH
+                    : Constant.LINUX_PROFILES_PATH;
+
+            if (!newProfile.isEmpty()) {
+                // 当前用户
+                //User currentUser = ShiroUtils.getUserEntity();
+                User currentUser = new User();currentUser.setId(1);
+                String profilePathAndNameDB = currentUser.getProfilePath();
+                // 默认以原来的头像名称为新头像的名称，这样可以直接替换掉文件夹中对应的旧头像
+                String newProfileName = profilePathAndNameDB;
+                // 若头像名称不存在
+                if (profilePathAndNameDB == null || "".equals(profilePathAndNameDB)) {
+                    newProfileName = profilesPath+ System.currentTimeMillis()+ newProfile.getOriginalFilename();
+                    // 路径存库
+                    currentUser.setProfilePath(newProfileName);
+                    sampleServiceMap.updateUser(currentUser);
+                }
+                // 磁盘保存
+                BufferedOutputStream out = null;
+                try {
+                    File folder = new File(profilesPath);
+                    if (!folder.exists())
+                        folder.mkdirs();
+                    out = new BufferedOutputStream(new FileOutputStream(newProfileName));
+                    // 写入新文件
+                    out.write(newProfile.getBytes());
+                    out.flush();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Parameters fail = Parameters.fail();
+                    fail.setMsg("设置头像失败");
+                    return fail ;
+                } finally {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Parameters ok = Parameters.ok();
+                ok.setMsg("设置头像成功");
+                int i = newProfileName.indexOf("s/");
+                String substring = newProfileName.substring(i+2);
+                currentUser.setProfilePath(substring);
+                sampleServiceMap.updateUser(currentUser);
+                return ok;
+            } else {
+                Parameters fail = Parameters.fail();
+                fail.setMsg("设置头像失败");
+                return fail ;
+            }
     }
 }

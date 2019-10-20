@@ -3,14 +3,19 @@ package com.example.test.controller;
 import com.example.test.dto.User;
 import com.example.test.redis.demo.UserRedisTemplate;
 import com.example.test.tool.Constant;
+import com.example.test.tool.Parameters;
 import com.example.test.tool.RedisUtils;
 import com.example.test.tool.ShiroUtils;
 import com.google.code.kaptcha.Producer;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import redis.clients.jedis.Jedis;
 
 import javax.imageio.ImageIO;

@@ -19,12 +19,16 @@ import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.github.qcloudsms.httpclient.HTTPException;
 import org.json.JSONException;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collection;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import static com.example.test.tool.Constant.appid;
 import static com.example.test.tool.Constant.appkey;
@@ -169,6 +173,20 @@ public class SampleControllerImpl implements SampleController {
     public Parameters<User> denied() {
         Parameters fail = Parameters.denied();
         return fail;
+    }
+
+    @Override
+    public Parameters<User> getUser() {
+        Parameters response = Parameters.ok();
+        User user = ShiroUtils.getUserEntity();
+        response.setData(user);
+        return response;
+    }
+
+    @Override
+    public void setUserProfile(MultipartFile profile, HttpServletRequest request,HttpServletResponse response) throws IOException {
+        Parameters<User> responses=sampleService.setUserProfile(profile);
+        response.sendRedirect(request.getContextPath() + "/login.html");
     }
 
 

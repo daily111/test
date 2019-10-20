@@ -18,6 +18,15 @@ public class User implements Serializable {
     private Integer loginCount;//登陆次数
     private Integer roleId;//角色id
     private String roleName;//角色名
+    private String profilePath;//头像路径
+
+    public String getProfilePath() {
+        return profilePath;
+    }
+
+    public void setProfilePath(String profilePath) {
+        this.profilePath = profilePath;
+    }
 
     public Integer getRoleId() {
         return roleId;
