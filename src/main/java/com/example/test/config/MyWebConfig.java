@@ -20,7 +20,7 @@ public class MyWebConfig implements WebMvcConfigurer {
         if (OSName.toLowerCase().startsWith("win")){
             registry.addResourceHandler("/image/**").addResourceLocations("file:C:/super_meeting/profiles/");
         }else {
-            registry.addResourceHandler("/image/**").addResourceLocations("file:/root/usr/dj/imgs/");
+            registry.addResourceHandler("/image/**").addResourceLocations("file:/usr/dj/imgs/");
         }
 
 
