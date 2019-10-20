@@ -16,7 +16,24 @@ public class User implements Serializable {
     private Date inputTime;//注册时间
     private Date loginTime;//最新登陆时间
     private Integer loginCount;//登陆次数
+    private Integer roleId;//角色id
+    private String roleName;//角色名
 
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
     public Date getInputTime() {
         return inputTime;

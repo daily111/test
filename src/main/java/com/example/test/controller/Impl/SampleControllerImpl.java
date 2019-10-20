@@ -166,28 +166,10 @@ public class SampleControllerImpl implements SampleController {
     }
 
     @Override
-    public Parameters<MessageBoard> saveMessageBoard(@RequestBody MessageBoard messageBoard) {
-        Parameters<MessageBoard> response = new Parameters<>();
-
-        int n=sampleService.saveMessageBoard(messageBoard);
-
-        if (n>0){
-            response= Parameters.ok();
-            return response;
-        }
-        response=Parameters.fail();
-        return response;
+    public Parameters<User> denied() {
+        Parameters fail = Parameters.denied();
+        return fail;
     }
 
-    @Override
-    public Parameters<PageDto<MessageBoard>> messageBoardList(QueryMessageBoard query) {
-        Parameters<PageDto<MessageBoard>> response = new Parameters<>();
-        User user = ShiroUtils.getUserEntity();
-        PageDto<MessageBoard> data=sampleService.messageBoardList(query);
-
-        response.setMsg(user.getAccount());
-        response.setData(data);
-        return response;
-    }
 
 }

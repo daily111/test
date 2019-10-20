@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>index</title>
     <link rel="stylesheet" media="screen" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/reset.css"/>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
@@ -26,77 +26,9 @@
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 </head>
 <body>
-<div id="app">
-
-    <cmt-box v-on:func="messageBoardList" :msg="msg"></cmt-box>
-    <a href="user/logout">登出</a>
-    <ul class="list-group">
-        <li class="list-group-item" v-for="item in list" :key="item.id">
-            <span class="badge">{{item.inputTime}}----{{item.account}}</span>
-            {{item.message}}
-        </li>
-    </ul>
-
-
-</div>
-
-<template id="tmpl">
-    <div>
-        <div class="form-group">
-            <label>留言内容：</label>
-            <textarea class="form-control" v-model="message"></textarea>
-        </div>
-        <div class="form-group">
-            <input class="btn-primary" type="button" value="发表留言" @click="postComment">
-        </div>
-        <div class="form-group">
-            <label>留言人：</label>
-            <h3 style="color: #13E8E9" >{{msg}}</h3>
-        </div>
-    </div>
-</template>
-
+    <a href="messageBoard.html">留言板</a>
 <script>
 
-    var commentBox={
-        props:['msg'],
-        data() {
-            return {
-                account:'',
-                message:'',
-            }
-        },
-        template:'#tmpl',
-        methods:{
-            postComment(){
-                this.$http.post('home/saveMessageBoard',{account:this.msg,message:this.message},{}).then(function(result){
-                    this.$emit('func')
-                })
-            }
-        }
-    }
-
-    var vm =new Vue({
-        el:'#app',
-        data:{
-            list:[],
-            msg:'',
-        },
-        created() {
-            this.messageBoardList()
-        },
-        methods:{
-            messageBoardList(){
-                this.$http.post('home/messageBoardList',{},{}).then(function(result){
-                    this.msg=result.body.msg;
-                    this.list=result.body.data.items
-                })
-            }
-        },
-        components:{
-            'cmt-box':commentBox
-        }
-    })
 </script>
 </body>
 </html>

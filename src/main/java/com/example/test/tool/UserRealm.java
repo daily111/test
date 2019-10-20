@@ -13,14 +13,14 @@ import java.util.Set;
 /**
  * 认证
  */
-public class UserRealm extends AuthorizingRealm {
+public class UserRealm  {
 
 	@Autowired
 	private SampleService sysUserManager;
-    
-    /**
+   /*
+    *//**
      * 授权(验证权限时调用)
-     */
+     *//*
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		int userId = ShiroUtils.getUserId();
@@ -34,13 +34,13 @@ public class UserRealm extends AuthorizingRealm {
 		return info;
 	}
 
-	/**
+	*//**
 	 * 认证(登录时调用)
-	 */
+	 *//*
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken token) throws AuthenticationException {
-		/*String username = (String) token.getPrincipal();
+		*//*String username = (String) token.getPrincipal();
         String password = new String((char[]) token.getCredentials());
         
         //查询用户信息
@@ -61,8 +61,8 @@ public class UserRealm extends AuthorizingRealm {
         	throw new LockedAccountException("账号已被锁定,请联系管理员");
         }
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
-        return info;*/
+        return info;*//*
 		return null;
-	}
+	}*/
 
 }

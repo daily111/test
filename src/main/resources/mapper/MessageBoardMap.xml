@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test.mapper.MessageBoardMap">
+    <insert id="saveMessageBoard" parameterType="com.example.test.dto.MessageBoard">
+        insert into message_board(account,message,inputTime)
+        values (#{account,jdbcType=VARCHAR},#{message,jdbcType=VARCHAR},#{inputTime,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="messageBoardList" parameterType="com.example.test.dto.QueryMessageBoard" resultType="com.example.test.dto.MessageBoard">
+        select id as id, account as account, message as message,inputTime as inputTime
+        from message_board order by  inputTime  desc
+    </select>
+</mapper>

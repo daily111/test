@@ -31,6 +31,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     private SampleService sampleService;
 
 
+
     //slf4j记录日志，可以不使用
     private Logger logger = LoggerFactory.getLogger(MyShiroRealm.class);
 
@@ -43,17 +44,18 @@ public class MyShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         HttpServletRequest request = (HttpServletRequest) ((WebSubject) SecurityUtils
                 .getSubject()).getServletRequest();//这个可以用来获取在登录的时候提交的其他额外的参数信息
-        String username = (String) principals.getPrimaryPrincipal();//这里是写的demo，后面在实际项目中药通过这个登录的账号去获取用户的角色和权限，这里直接是写死的
+        User user =(User)principals.getPrimaryPrincipal();//这里是写的demo，后面在实际项目中药通过这个登录的账号去获取用户的角色和权限，这里直接是写死的
         //受理权限
         //角色
-        Set<String> roles = new HashSet<String>();
-        roles.add("role1");
-        authorizationInfo.setRoles(roles);
+        //用户角色
+        Set<String> rolesSet = sampleService.listUserRoles(user.getId());
+        authorizationInfo.setRoles(rolesSet);
         //权限
-        Set<String> permissions = new HashSet<String>();
-        permissions.add("user:list");
-        //permissions.add("user:add");
-        authorizationInfo.setStringPermissions(permissions);
+        //Set<String> permissions = new HashSet<String>();
+        Set<String> permsSet = sampleService.listUserPerms(user.getRoleId());
+        //permissions.add("user:list");
+        //permissions.add("user:save");
+        authorizationInfo.setStringPermissions(permsSet);
         return authorizationInfo;
     }
     /**

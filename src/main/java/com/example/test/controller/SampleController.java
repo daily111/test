@@ -51,10 +51,9 @@ public interface SampleController {
     public Parameters<PageDto<User>> list(QueryUser query);
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/saveMessageBoard")
-    public Parameters<MessageBoard> saveMessageBoard(@RequestBody MessageBoard messageBoard);
+    @GetMapping("/denied")
+    public Parameters<User> denied();
 
-    @CrossOrigin(origins = "*")
-    @PostMapping("/messageBoardList")
-    public Parameters<PageDto<MessageBoard>> messageBoardList(@RequestBody QueryMessageBoard query);
+
+
 }

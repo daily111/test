@@ -28,7 +28,7 @@ public interface SampleService {
 
     Set<String> listUserRoles(Integer userId);
 
-    Set<String> listUserPerms(int userId);
+    Set<String> listUserPerms(Integer roleId);
 
     User getByUserName(User user);
 }

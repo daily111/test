@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>index</title>
+    <link rel="stylesheet" media="screen" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css"/>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script>
+    <!--<script src="statics/myCss.css"></script>-->
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <cmt-box v-on:func="messageBoardList" :msg="msg"></cmt-box>
+    <a href="user/logout">登出</a>
+    <ul class="list-group">
+        <li class="list-group-item" v-for="item in list" :key="item.id">
+            <span class="badge">{{item.inputTime}}----{{item.account}}</span>
+            {{item.message}}
+        </li>
+    </ul>
+
+
+</div>
+
+<template id="tmpl">
+    <div>
+        <div class="form-group">
+            <label>留言内容：</label>
+            <textarea class="form-control" v-model="message"></textarea>
+        </div>
+        <div class="form-group">
+            <input class="btn-primary" type="button" value="发表留言" @click="postComment">
+        </div>
+        <div class="form-group">
+            <label>留言人：</label>
+            <h3 style="color: #13E8E9" >{{msg}}</h3>
+        </div>
+    </div>
+</template>
+
+<script>
+
+    var commentBox={
+        props:['msg'],
+        data() {
+            return {
+                account:'',
+                message:'',
+            }
+        },
+        template:'#tmpl',
+        methods:{
+            postComment(){
+                this.$http.post('messageBoard/save',{account:this.msg,message:this.message},{}).then(function(result){
+                        if (result.body.code==7777){
+                            console.log(result.body.msg);
+                            alert(result.body.msg);
+                        }
+                    this.$emit('func')
+                })
+            }
+        }
+    }
+
+    var vm =new Vue({
+        el:'#app',
+        data:{
+            list:[],
+            msg:'',
+        },
+        created() {
+            this.messageBoardList()
+        },
+        methods:{
+            messageBoardList(){
+                this.$http.post('messageBoard/list',{},{}).then(function(result){
+                    this.msg=result.body.msg;
+                    this.list=result.body.data.items
+                })
+            }
+        },
+        components:{
+            'cmt-box':commentBox
+        }
+    })
+</script>
+</body>
+</html>

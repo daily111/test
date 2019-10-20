@@ -131,17 +131,20 @@ public class SampleServiceImpl implements SampleService {
     public Set<String> listUserRoles(Integer userId) {
         //List<String> roles = sampleServiceMap.listUserRoles(userId);
         Set<String> rolesSet = new HashSet<>();
+        User user=sampleServiceMap.listUserRoles(userId);
         /*for(String role : roles) {
             if(StringUtils.isNotBlank(role)) {
                 rolesSet.addAll(Arrays.asList(role.trim().split(",")));
             }
         }*/
+        rolesSet.add(user.getRoleName());
         return rolesSet;
     }
 
     @Override
-    public Set<String> listUserPerms(int userId) {
-        return null;
+    public Set<String> listUserPerms(Integer roleId) {
+        Set<String> set=sampleServiceMap.listUserPerms(roleId);
+        return set;
     }
 
     @Override

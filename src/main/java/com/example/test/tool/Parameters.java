@@ -49,6 +49,12 @@ public class Parameters<T> {
         para.setCode("9999");
         return para;
     }
+    public static Parameters denied(){
+        Parameters para =new Parameters();
+        para.setCode("7777");
+        para.setMsg(Constant.ACCESS_DENIED);
+        return para;
+    }
 
 
 

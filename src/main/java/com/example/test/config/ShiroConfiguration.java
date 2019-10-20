@@ -41,7 +41,8 @@ public class ShiroConfiguration {
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         /************************************初始化所有的权限信息开始******************************************/
         //这里，如果以后再项目中使用的话，直接从数据库中查询
-        //filterChainDefinitionMap.put("/user/list", "authc,perms[user:list]");
+        filterChainDefinitionMap.put("/**/list", "authc,perms[user:list]");
+        filterChainDefinitionMap.put("/**/save", "authc,perms[user:save]");
         //filterChainDefinitionMap.put("/user/add", "authc,perms[user:add]");
         /***************************************初始化所有的权限信息开始结束*********************************************/
         filterChainDefinitionMap.put("/**", "authc");
@@ -50,7 +51,7 @@ public class ShiroConfiguration {
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/index.html");
         //未授权界面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/home/denied");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

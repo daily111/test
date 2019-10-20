@@ -31,4 +31,6 @@ package com.example.test.tool;
     public static final int PAGE_SIZE=15;
 
     public final static String KAPTCHA_SESSION_KEY = "KAPTCHA_SESSION_KEY";//验证码key
+
+    public final static String ACCESS_DENIED="权限不够，拒绝操作";
  }
