@@ -36,5 +36,5 @@ package com.example.test.tool;
 
     /** 头像保存路径 */
     public static final String WINDOWS_PROFILES_PATH = "C:/super_meeting/profiles/";
-    public static final String LINUX_PROFILES_PATH = "/root/usr/dj/imgs/";
+    public static final String LINUX_PROFILES_PATH = "/usr/dj/imgs/";
  }
