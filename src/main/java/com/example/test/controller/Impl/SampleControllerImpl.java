@@ -185,8 +185,19 @@ public class SampleControllerImpl implements SampleController {
 
     @Override
     public void setUserProfile(MultipartFile profile, HttpServletRequest request,HttpServletResponse response) throws IOException {
+        /*response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/msexcel");*/
         Parameters<User> responses=sampleService.setUserProfile(profile);
-        response.sendRedirect(request.getContextPath() + "/login.html");
+        /*response.sendRedirect(request.getContextPath() + "/login.html");*/
+    }
+
+    @Override
+    public Parameters<User> updateUser() {
+        User user = ShiroUtils.getUserEntity();
+        User byUserName = sampleService.getByUserName(user);
+        Parameters ok = Parameters.ok();
+        ok.setData(byUserName);
+        return ok;
     }
 
 

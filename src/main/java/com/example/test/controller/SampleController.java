@@ -77,8 +77,21 @@ public interface SampleController {
     @GetMapping("/getUser")
     public Parameters<User> getUser();
 
-
+    /**
+     * 上传头像接口
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @CrossOrigin(origins = "*")
     @ApiOperation(value = "设置用户头像", notes = "设置当前用户头像")
-    @PostMapping("/profiles")
-    public void setUserProfile(@RequestParam(required = true) MultipartFile profile, HttpServletRequest request,HttpServletResponse response) throws IOException;
+    @RequestMapping(value = "/profiles", method = RequestMethod.POST)
+    public void setUserProfile(@RequestParam(value = "filename",required = true) MultipartFile profiles, HttpServletRequest request,HttpServletResponse response) throws IOException;
+
+    /**
+     * 获取用户最新信息
+     * @return
+     */
+    @PostMapping("/updateUser")
+    public Parameters<User> updateUser();
 }

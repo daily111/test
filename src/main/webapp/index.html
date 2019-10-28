@@ -41,9 +41,43 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+  .el-upload__input{
+    opacity: 0
+  ;
+  }
+</style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper" id="app">
@@ -271,7 +305,21 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img :src="profilePath"  data-toggle="modal" data-target="#ResetModal" class="img-circle" alt="User Image">
+
+
+                <el-upload
+                        id="ul"
+                        class="img-circle"
+                        action="home/profiles"
+                        :show-file-list="false"
+                        name="filename"
+                        :on-success="handleAvatarSuccess"
+                        :before-upload="beforeAvatarUpload">
+                  <img v-if="profilePath" :src="profilePath" class="img-circle" alt="User Image" style="height: 100px;height: 100px">
+                  <i v-else class="el-icon-plus avatar-uploader-icon" ></i>
+                </el-upload>
+
+
                 <p>
                   {{userName}}
                 </p>
@@ -1224,17 +1272,7 @@
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
-  <div class="modal fade" id="ResetModal" role="dialog" style=" position: fixed;
-      left: 50%;
-      top: 50%;
-      width: 300px;
-      height: 200px;
-      margin: -100px 0px 0px -150px;zindex:9999999999;">
-    <form action="home/profiles" method="post" enctype="multipart/form-data">
-      <input type="file" name="profile" value="更换用户头像"/>
-      <input id="submit_form" type="submit" class="btn btn-success save" value="保存"/>
-    </form>
-  </div>
+
 </div>
 <!-- ./wrapper -->
 <script>
@@ -1254,6 +1292,33 @@
                   this.profilePath="image/"+result.body.data.profilePath;
 
               })
+          },
+          updateUser(){
+              this.$http.post('home/updateUser',{},{}).then(function (result) {
+                  console.log("456");
+                  this.profilePath="image/"+result.body.data.profilePath;
+              })
+          },
+          handleAvatarSuccess(res, file) {
+              this.profilePath = URL.createObjectURL(file.raw);
+              this.$http.get('home/getUser',{},{}).then(function (result) {
+                  //this.userName=result.body.data.account;
+                  this.profilePath="image/"+result.body.data.profilePath;
+
+              })
+
+          },
+          beforeAvatarUpload(file) {
+              const isJPG = file.type === 'image/jpeg';
+              const isLt2M = file.size / 1024 / 1024 < 2;
+
+              if (!isJPG) {
+                  this.$message.error('上传头像图片只能是 JPG 格式!');
+              }
+              if (!isLt2M) {
+                  this.$message.error('上传头像图片大小不能超过 2MB!');
+              }
+              return isJPG && isLt2M;
           }
       },
 
@@ -1264,6 +1329,7 @@
 <!-- jQuery UI 1.11.4 -->
 <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.1/jquery.form.min.js" integrity="sha384-tIwI8+qJdZBtYYCKwRkjxBGQVZS3gGozr3CtI+5JF/oL1JmPEHzCEnIKbDbLTCer" crossorigin="anonymous"></script>
 <script>
   $.widget.bridge('uibutton', $.ui.button);
 </script>
