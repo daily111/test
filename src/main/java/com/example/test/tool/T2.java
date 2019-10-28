@@ -24,7 +24,7 @@ public class T2 {
 
         User user = new User();user.setId(11);
         T3 t3 = new T3();
-        t3.test(user);
+        t3.test(user );
         System.out.println(user);
 
 
