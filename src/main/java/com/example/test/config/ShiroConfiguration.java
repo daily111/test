@@ -38,7 +38,10 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/**/**.css", "anon");
         filterChainDefinitionMap.put("/**/**.jpg", "anon");
         filterChainDefinitionMap.put("/**/**.png", "anon");
-        filterChainDefinitionMap.put("T1.html","anon");
+        filterChainDefinitionMap.put("/T1.html","anon");
+        //先关闭数据权限，取消登录
+        filterChainDefinitionMap.put("/**/**", "anon");
+        filterChainDefinitionMap.put("/**", "anon");
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         /************************************初始化所有的权限信息开始******************************************/
         //这里，如果以后再项目中使用的话，直接从数据库中查询

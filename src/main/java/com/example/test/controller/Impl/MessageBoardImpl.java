@@ -35,8 +35,9 @@ public class MessageBoardImpl implements MessageBoard {
         Parameters<PageDto<com.example.test.dto.MessageBoard>> response = new Parameters<>();
         User user = ShiroUtils.getUserEntity();
         PageDto<com.example.test.dto.MessageBoard> data=messageBoardService.messageBoardList(query);
-
-        response.setMsg(user.getAccount());
+        if (user!=null){
+            response.setMsg(user.getAccount());
+        }
         response.setData(data);
         return response;
     }

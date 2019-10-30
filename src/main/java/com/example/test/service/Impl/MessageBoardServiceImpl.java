@@ -2,9 +2,11 @@ package com.example.test.service.Impl;
 
 import com.example.test.dto.MessageBoard;
 import com.example.test.dto.QueryMessageBoard;
+import com.example.test.dto.User;
 import com.example.test.mapper.MessageBoardMap;
 import com.example.test.service.MessageBoardService;
 import com.example.test.tool.PageDto;
+import com.example.test.tool.ShiroUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,12 @@ public class MessageBoardServiceImpl implements MessageBoardService {
     public int saveMessageBoard(MessageBoard messageBoard) {
         Calendar ca = Calendar.getInstance();
         messageBoard.setInputTime(ca.getTime());
+        User user = ShiroUtils.getUserEntity();
+        if (user!=null){
+            messageBoard.setAccount(user.getAccount());
+            messageBoard.setUserId(user.getId());
+        }
+
         int n = messageBoardMap.saveMessageBoard(messageBoard);
 
 

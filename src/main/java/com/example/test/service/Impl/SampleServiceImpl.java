@@ -204,7 +204,7 @@ public class SampleServiceImpl implements SampleService {
             ok.setMsg("设置头像成功");
             int i = newProfileName.indexOf("s/");
             String substring = newProfileName.substring(i+2);
-            currentUser.setProfilePath(substring);
+            currentUser.setProfilePath(Constant.IMAGE+substring);
             sampleServiceMap.updateUser(currentUser);
             return ok;
         } else {

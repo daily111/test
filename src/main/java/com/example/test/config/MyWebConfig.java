@@ -18,7 +18,7 @@ public class MyWebConfig implements WebMvcConfigurer {
         String profilesPath = OSName.toLowerCase().startsWith("win") ? Constant.WINDOWS_PROFILES_PATH
                 : Constant.LINUX_PROFILES_PATH;
         if (OSName.toLowerCase().startsWith("win")){
-            registry.addResourceHandler("/image/**").addResourceLocations("file:C:/super_meeting/profiles/");
+            registry.addResourceHandler("/image/**").addResourceLocations("file:D:/images/");
         }else {
             registry.addResourceHandler("/image/**").addResourceLocations("file:/usr/dj/imgs/");
         }
